@@ -6,11 +6,14 @@ import java.util.List;
 
 public class Pokemon {
 
+    //Campos da api que queremos trazer pro apk
     @SerializedName(value = "name")
     private String name;
 
+    //Lista de tipos do pokemon
     private List<Types> types;
 
+    //Sprite do pokemon
     private Sprites sprites;
 
     public String getName() {

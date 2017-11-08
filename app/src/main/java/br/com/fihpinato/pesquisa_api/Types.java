@@ -2,6 +2,7 @@ package br.com.fihpinato.pesquisa_api;
 
 public class Types {
 
+    //Nomes dos itens que estão dentro do types da api
     private int slot;
     private Type type;
 

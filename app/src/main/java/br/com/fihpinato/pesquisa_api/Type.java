@@ -2,6 +2,7 @@ package br.com.fihpinato.pesquisa_api;
 
 public class Type {
 
+    //Nomes dos itens que estão na api
     private String url;
     private String name;
 

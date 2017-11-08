@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Declara os campos do XML
     private EditText etNumero;
     private ImageView ivSprite;
     private TextView tvNome;
@@ -28,24 +29,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Diz onde achar cada campo
         etNumero = (EditText) findViewById(R.id.etNumero);
         ivSprite = (ImageView) findViewById(R.id.ivSprite);
         tvNome = (TextView) findViewById(R.id.tvNome);
         tvTipo = (TextView) findViewById(R.id.tvTipo);
     }
 
+    //Função que faz a magica acontecer
     public void searchPokemon(View view) {
+        //Constrói a biblioteca do Retrofit baseado na URL da API
         Retrofit retrofit = new Retrofit.Builder()
+                //Coloque aqui a URL da sua API
                 .baseUrl("http://pokeapi.co")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //Constroi o serviço pra trazer de volta o que for requisitado
         PokemonService service = retrofit.create(PokemonService.class);
 
+        //Função que criamos na classe PokemonService
         service.buscarPokemon(etNumero.getText().toString())
                 .enqueue(new Callback<Pokemon>() {
                     @Override
                     public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                        //Se a api respondeu e retornou valores:
                         if (response.isSuccessful()) {
                             Pokemon pokemon = response.body();
 
@@ -59,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
                                 sb.append("\n");
                             }
                             tvTipo.setText(sb.toString());
-                        } else {
+                        } else { //Se a api respondeu mas não restornou dados
                             Toast.makeText(MainActivity.this,
                                     "Erro de API", Toast.LENGTH_SHORT).show();
                         }
                     }
 
-                    @Override
+                    @Override //Se a api não respondeu
                     public void onFailure(Call<Pokemon> call, Throwable t) {
                         Toast.makeText(MainActivity.this,
                                 "Erro de requisição", Toast.LENGTH_SHORT).show();
